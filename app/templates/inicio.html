@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Hola, {{ nombre }}</h1>
+<p>Bienvenido a la biblioteca. Consulta el <a href="{{ url_for('inicio.catalogo') }}">catálogo</a> o busca por autor.</p>
+<form action="{{ url_for('inicio.catalogo') }}">
+  <input name="autor" placeholder="Autor, p. ej. Arguedas">
+  <button>Buscar</button>
+</form>
+{% endblock %}

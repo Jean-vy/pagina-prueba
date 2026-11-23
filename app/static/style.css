@@ -1,0 +1,9 @@
+body { font-family: system-ui, sans-serif; margin: 0; color: #1f2933; background: #f7f7f5; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #1d3557; }
+header a { color: #fff; text-decoration: none; }
+.marca { font-weight: 700; font-size: 1.2rem; }
+main { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: .6rem .8rem; border-bottom: 1px solid #e4e7eb; text-align: left; }
+input, button { padding: .5rem .7rem; font-size: 1rem; }
+footer { text-align: center; color: #7b8794; font-size: .85rem; padding: 2rem; }

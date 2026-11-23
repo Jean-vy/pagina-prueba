@@ -1,0 +1,38 @@
+# secfix en cada pull request: Semgrep + LLM + validación + sugerencias.
+# La herramienta no se copia aquí: se usa la acción publicada en Jean-vy/tais-secfix1.
+name: secfix
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Los permisos los da este workflow, no la acción.
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: secfix-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  secfix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # obligatorio: secfix calcula git diff base...head
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Dependencias de esta web, con Python 3.12 (la misma versión que usa la acción).
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -q -r requirements.txt
+
+      - uses: Jean-vy/tais-secfix1@main   # cámbialo a @v1 si creas ese tag en tais-secfix1
+        with:
+          llm-token: ${{ secrets.LLM_API_KEY }}
+          llm-endpoint: ${{ vars.LLM_ENDPOINT }}   # opcional (vacío = Groq)
+          model: ${{ vars.LLM_MODEL }}             # opcional
+          test-cmd: "python -m pytest -q tests"    # V3 y V4 (tests test_exploit_*)

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Catálogo{% if autor %}: «{{ autor }}»{% endif %}</h1>
+<table>
+  <tr><th>Título</th><th>Autor</th><th>Año</th></tr>
+  {% for l in libros %}
+  <tr><td>{{ l.titulo }}</td><td>{{ l.autor }}</td><td>{{ l.anio }}</td></tr>
+  {% else %}
+  <tr><td colspan="3">No se encontraron libros.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
